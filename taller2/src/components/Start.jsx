@@ -48,9 +48,15 @@ const Start = () => {
       </Grid>
 
       <Grid item>
-        <Button variant="outlined" onClick={() => start()}>
-          <NavLink to={{ pathname: `/game/${p1}/${p2}` }}>Iniciar</NavLink>
-        </Button>
+        {p1.length > 0 && p2.length > 0 ? (
+          <Button variant="outlined" onClick={() => start()}>
+            <NavLink to={{ pathname: `/game/${p1}/${p2}` }}>Iniciar</NavLink>
+          </Button>
+        ) : (
+          <Button variant="outlined" disabled>
+            Iniciar
+          </Button>
+        )}
       </Grid>
     </Stack>
   );
