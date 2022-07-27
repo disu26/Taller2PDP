@@ -1,20 +1,27 @@
-import { Stack } from "@mui/material";
+import { Stack, Grid } from "@mui/material";
 import React from "react";
 import ObtainedCards from "../components/ObtainedCards";
 import PlayButton from "../components/PlayButton";
+import Player from "../components/Player";
 import { CardsProvider } from "../context/CardsProvider";
-import useCards from "../hooks/useCards";
+import HomeIcon from "@mui/icons-material/Home";
+import { NavLink } from "react-router-dom";
 
 const Game = () => {
-  //const { player1, player2 } = useCards();
-
   return (
     <CardsProvider>
       <Stack direction="column" spacing={4}>
+        <Grid item>
+          <NavLink to="/">{<HomeIcon />}</NavLink>
+        </Grid>
         <Stack direction="row" spacing={3}>
-            <h1>Jugador 1: Pedro Perez</h1>
+          <Grid container>
+            <Player index={1} />
+          </Grid>
           <PlayButton />
-            <h1>Jugador 2: Pablo Motos</h1>
+          <Grid container className="mx-5">
+            <Player index={2} />
+          </Grid>
         </Stack>
         <ObtainedCards />
       </Stack>

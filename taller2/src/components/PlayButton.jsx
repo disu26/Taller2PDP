@@ -4,16 +4,24 @@ import useCards from "../hooks/useCards";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 const PlayButton = () => {
-  const { setGetCards, getCards } = useCards();
+  const { setGetCards, getCards, endGame } = useCards();
 
   const play = () => {
     setGetCards(!getCards);
   };
 
   return (
-    <Button variant="outlined" onClick={() => play()}>
-      <PlayArrowIcon />
-    </Button>
+    <>
+      {!endGame ? (
+        <Button variant="outlined" onClick={() => play()}>
+          <PlayArrowIcon />
+        </Button>
+      ) : (
+        <Button variant="outlined" disabled>
+          <PlayArrowIcon />
+        </Button>
+      )}
+    </>
   );
 };
 

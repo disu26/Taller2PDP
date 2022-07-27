@@ -1,13 +1,13 @@
-import React from 'react'
-import Start from '../components/Start'
-import { CardsProvider } from '../context/CardsProvider'
+import React from "react";
+import Start from "../components/Start";
+import { CardsProvider } from "../context/CardsProvider";
 
 const HomePage = () => {
   return (
     <CardsProvider>
-        <Start />
+      <Start />
     </CardsProvider>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

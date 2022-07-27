@@ -16,9 +16,7 @@ const NotFoundPage = () => {
         </span>
       </label>
       <div className="mt-4">
-        <NavLink to="/">
-            Regresar
-        </NavLink>
+        <NavLink to="/">Regresar</NavLink>
       </div>
     </div>
   );

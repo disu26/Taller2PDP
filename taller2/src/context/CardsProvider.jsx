@@ -6,11 +6,12 @@ const CardsContext = createContext();
 const CardsProvider = ({ children }) => {
   const [cardsPlayer1, setCardsPlayer1] = useState([]);
   const [cardsPlayer2, setCardsPlayer2] = useState([]);
-  const [player1, setPlayer1] = useState("Pedro");
-  const [player2, setPlayer2] = useState("Pablo");
+  const [player1, setPlayer1] = useState("");
+  const [player2, setPlayer2] = useState("");
   const [gameId, setGameId] = useState("");
   const [start, setStart] = useState(false);
   const [getCards, setGetCards] = useState(false);
+  const [endGame, setEndGame] = useState(false);
 
   useEffect(() => {
     const startGame = async () => {
@@ -34,6 +35,11 @@ const CardsProvider = ({ children }) => {
     get2Cards();
   }, [getCards]);
 
+  const updateNames = (name1, name2) => {
+    setPlayer1(name1);
+    setPlayer2(name2);
+  };
+
   return (
     <CardsContext.Provider
       value={{
@@ -42,10 +48,11 @@ const CardsProvider = ({ children }) => {
         setStart,
         setGetCards,
         getCards,
-        setPlayer1,
-        setPlayer2,
+        updateNames,
         player1,
         player2,
+        setEndGame,
+        endGame,
       }}
     >
       {children}
