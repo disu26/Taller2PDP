@@ -1,10 +1,8 @@
 import React from "react";
-import { useMatch } from "react-router-dom";
+import useCards from "../hooks/useCards";
 
 const Player = ({ index }) => {
-  const {
-    params: { player1, player2 },
-  } = useMatch("/game/:player1/:player2");
+  const {player1, player2} = useCards();
 
   return (
     <>

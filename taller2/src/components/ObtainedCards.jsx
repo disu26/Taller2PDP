@@ -3,19 +3,22 @@ import useCards from "../hooks/useCards";
 import { Grid, Stack } from "@mui/material";
 import CardItem from "./CardItem";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import BalanceIcon from '@mui/icons-material/Balance';
 
 const ObtainedCards = () => {
   const { cardsPlayer1, cardsPlayer2, setEndGame } = useCards();
 
   const [win, setWin] = useState(false);
 
+  const [draw, setDraw] = useState(false);
+
   const [winP1, setWinP1] = useState(false);
 
   const [winP2, setWinP2] = useState(false);
 
-  const [optionCards1, setOptionCards1] = React.useState([]);
+  const [optionCards1, setOptionCards1] = useState([]);
 
-  const [optionCards2, setOptionCards2] = React.useState([]);
+  const [optionCards2, setOptionCards2] = useState([]);
 
   useEffect(() => {
     cardsPlayer1.map((cardItem) => {
@@ -63,14 +66,26 @@ const ObtainedCards = () => {
       setWinP1(false);
       return;
     }
+    if(optionCards1[0].suit !== optionCards2[1].suit){
+      const suit1 = checkSuit(optionCards1[0].suit);
+      const suit2 = checkSuit(optionCards2[1].suit);
+      if (suit1 < suit2) {
+        setWinP2(false);
+        return;
+      }
+      setWinP1(false);
+      return;
+    }
     const suit1 = checkSuit(optionCards1[1].suit);
     const suit2 = checkSuit(optionCards2[1].suit);
     if (suit1 < suit2) {
       setWinP2(false);
       return;
+    } else if (suit2 < suit1) {
+      setWinP1(false);
+      return;
     }
-    setWinP1(false);
-    return;
+    setDraw(true);
   };
 
   const checkSuit = (suit) => {
@@ -91,40 +106,55 @@ const ObtainedCards = () => {
   return (
     <>
       <Stack direction="row" spacing={2}>
-        {win ? (
-          winP1 ? (
-            <>
-              <Grid container spacing={2}>
-                {optionCards1.map((card) => (
-                  <CardItem cardItem={card} />
-                ))}
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item md={4} xs={12} lg={8}>
-                  <h2>Jugador 1 ganó!!!! {<FavoriteIcon />}</h2>
+        {!draw ? (
+          win ? (
+            winP1 ? (
+              <>
+                <Grid container spacing={2}>
+                  {optionCards1.map((card) => (
+                    <CardItem cardItem={card} />
+                  ))}
                 </Grid>
-              </Grid>
-            </>
+                <Grid container spacing={2}>
+                  <Grid item md={4} xs={12} lg={8}>
+                    <h2>Jugador 1 ganó!!!! {<FavoriteIcon />}</h2>
+                  </Grid>
+                </Grid>
+              </>
+            ) : (
+              <>
+                <Grid container spacing={2}>
+                  <Grid item md={4} xs={12} lg={8}>
+                    <h2>Jugador 2 ganó!!! {<FavoriteIcon />}</h2>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2}>
+                  {optionCards2.map((card) => (
+                    <CardItem cardItem={card} />
+                  ))}
+                </Grid>
+              </>
+            )
           ) : (
-            <>
-              <Grid container spacing={2}>
-                <Grid item md={4} xs={12} lg={8}>
-                  <h2>Jugador 2 ganó!!! {<FavoriteIcon />}</h2>
-                </Grid>
+            <Grid container>
+              <Grid item md={4} xs={12} lg={8}>
+                <h2>Juego en progreso</h2>
               </Grid>
-              <Grid container spacing={2}>
-                {optionCards2.map((card) => (
-                  <CardItem cardItem={card} />
-                ))}
-              </Grid>
-            </>
+            </Grid>
           )
         ) : (
-          <Grid container>
-            <Grid item md={4} xs={12} lg={8}>
-              <h2>Juego en progreso</h2>
+          <>
+            <Grid container spacing={2}>
+              <Grid item md={4} xs={12} lg={8}>
+                <h2>Empate!!! {<BalanceIcon />}</h2>
+              </Grid>
             </Grid>
-          </Grid>
+            <Grid container spacing={2}>
+            <Grid item md={4} xs={12} lg={8}>
+                <h2>Empate!!! {<BalanceIcon />}</h2>
+              </Grid>
+            </Grid>
+          </>
         )}
       </Stack>
       <Stack direction="row" spacing={2}>
